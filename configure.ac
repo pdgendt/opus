@@ -159,6 +159,15 @@ AS_IF([test "$enable_fixed_res24" = "yes"],[
   AC_DEFINE([ENABLE_RES24], [1], [24-bit internal resolution for fixed-point])
 ])
 
+AC_ARG_ENABLE([qext],
+	      [AS_HELP_STRING([--enable-qext], [Enable scalable quality extension])],,
+    [enable_qext=no])
+
+AS_IF([test "$enable_qext" = "yes"],[
+  AC_DEFINE([ENABLE_QEXT], [1], [Scalable quality extension])
+])
+AM_CONDITIONAL([ENABLE_QEXT], [test "$enable_qext" = "yes"])
+
 AC_ARG_ENABLE([custom-modes],
     [AS_HELP_STRING([--enable-custom-modes], [enable non-Opus modes, e.g. 44.1 kHz & 2^n frames])],,
     [enable_custom_modes=no])
@@ -168,7 +177,16 @@ AS_IF([test "$enable_custom_modes" = "yes"],[
   PC_BUILD="$PC_BUILD, custom modes"
 ])
 
-AM_CONDITIONAL([CUSTOM_MODES], [test "$enable_custom_modes" = "yes"])
+AC_ARG_ENABLE([opus-custom-api],
+    [AS_HELP_STRING([--enable-opus-custom-api], [enable Opus custom API])],,
+    [enable_opus_custom_api=no])
+
+AS_IF([test "$enable_opus_custom_api" = "yes"],[
+  AC_DEFINE([ENABLE_OPUS_CUSTOM_API], [1], [Opus custom API])
+  PC_BUILD="$PC_BUILD, Opus custom API"
+])
+
+AM_CONDITIONAL([CUSTOM_MODES], [test "$enable_custom_modes" = "yes" -o "$enable_opus_custom_api" == "yes"])
 
 AC_ARG_ENABLE([dred],
     [AS_HELP_STRING([--enable-dred], [Use Deep REDundancy (DRED)])],,
