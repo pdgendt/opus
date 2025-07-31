@@ -1,0 +1,16 @@
+
+config ZEPHYR_OPUS_MODULE
+	bool
+
+menuconfig OPUS
+	bool "Opus audio codec Support"
+	help
+	  This option enables the Opus library.
+
+if OPUS
+
+module = OPUS
+module-str = opus
+source "subsys/logging/Kconfig.template.log_config"
+
+endif

@@ -1,0 +1,4 @@
+name: opus
+build:
+  cmake: ./zephyr
+  kconfig: ./zephyr/Kconfig
